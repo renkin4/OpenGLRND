@@ -6,8 +6,10 @@ outputdir = "%{cfg.buildcfg}_%{cfg.system}_%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "OpenGLRND/src/vendor/GLFW/include"
+IncludeDir["Glad"] = "OpenGLRND/src/vendor/Glad/include"
 
 include "OpenGLRND/src/vendor/GLFW"
+include "OpenGLRND/src/vendor/Glad"
 
 project "OpenGLRND"
     kind "ConsoleApp"
@@ -30,12 +32,14 @@ project "OpenGLRND"
     includedirs 
 	{
 		"%{prj.name}/src", 
+        "%{IncludeDir.Glad}",
 		"%{IncludeDir.GLFW}"
 	}
 
     links 
 	{ 
         "GLFW",
+        "Glad",
         "opengl32.lib"
 	}	
 
