@@ -4,6 +4,11 @@ workspace "OpenGLRND"
 
 outputdir = "%{cfg.buildcfg}_%{cfg.system}_%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "OpenGLRND/src/vendor/GLFW/include"
+
+include "OpenGLRND/src/vendor/GLFW"
+
 project "OpenGLRND"
     kind "ConsoleApp"
     language "C++"
@@ -21,6 +26,12 @@ project "OpenGLRND"
         "%{prj.name}/src/vendor/**.cpp",
         "%{prj.name}/src/vendor/**.h"
     }
+
+    includedirs 
+	{
+		"%{prj.name}/src", 
+		"%{IncludeDir.GLFW}"
+	}
 
     links 
 	{ 
