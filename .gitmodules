@@ -1,3 +1,6 @@
 [submodule "OpenGLRND/src/vendor/GLFW"]
 	path = OpenGLRND/src/vendor/GLFW
 	url = https://github.com/renkin4/glfw.git
+[submodule "OpenGLRND\\src\\vendor\\GLM"]
+	path = OpenGLRND\\src\\vendor\\GLM
+	url = https://github.com/renkin4/glm.git
