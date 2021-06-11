@@ -9,9 +9,6 @@
 #include <sstream>
 #include <iostream>
 
-// Fucking hacks
-#define SHADER_DIR "C:/Users/Overlord/Desktop/RND/OpenGLRND/OpenGLRND/src/shader/"
-
 class Shader
 {
 public:
@@ -33,8 +30,8 @@ public:
 		try
 		{
 			// open files
-			vShaderFile.open(SHADER_DIR + vertexPath);
-			fShaderFile.open(SHADER_DIR + fragmentPath);
+			vShaderFile.open(vertexPath);
+			fShaderFile.open(fragmentPath);
 	/*		vShaderFile = ofstream(vertexPath);
 			fShaderFile = ofstream(fragmentPath);*/
 
