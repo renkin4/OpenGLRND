@@ -33,7 +33,7 @@ float deltaTime = 0.0f;	// Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 float lastX = 400, lastY = 300;
 
-glm::vec3 lightPos(0.0f, 1.0f, 2.0f);
+glm::vec3 lightPos(1.0f, 0.0f, 2.0f);
 glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
 
 int main()
@@ -73,7 +73,7 @@ int main()
 	// build and compile our shader zprogram
 	// ------------------------------------
 	Shader ourShader("shader\\shader.vs", "shader\\shader.fs");
-	Shader lightingShader("shader\\light.vs", "shader\\light.fs");
+	Shader lightingShader("shader\\material.vs", "shader\\material.fs");
 	// build and compile our shader zprogram
 	// ------------------------------------
  
@@ -157,7 +157,7 @@ int main()
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
-		float currentFrame = glfwGetTime();
+		float currentFrame = (float)glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
@@ -169,10 +169,18 @@ int main()
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		
 		// be sure to activate shader when setting uniforms/drawing objects
 		lightingShader.use();
-		lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+		lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+		lightingShader.setFloat("material.shininess", 32.0f);
+		
+		lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+		lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken diffuse light a bit
+		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
 		lightingShader.setVec3("lightColor", 1.f, 1.f, 1.f);
 		lightingShader.setVec3("lightPos", lightPos);
 
@@ -185,8 +193,9 @@ int main()
 		lightingShader.setMat4("view", view);
 
 		glm::mat4 model = glm::mat4(1.0f);
+		//model = glm::rotate(model, (float)glfwGetTime()* glm::radians(45.f), glm::vec3(0.0f, 1, 0));
 		lightingShader.setMat4("model", model);
-
+		lightingShader.setVec3("viewPos", cameraPos);
 
 		// render the cube
 		glBindVertexArray(cubeVAO);
